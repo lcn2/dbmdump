@@ -4,9 +4,9 @@
 #
 # title - one line synopsis
 #
-# @(#) $Revision: 1.1 $
-# @(#) $Id: dbmdump.pl,v 1.1 1999/09/22 01:51:19 chongo Exp chongo $
-# @(#) $Source: /usr/local/src/cmd/dbm/RCS/dbmdump.pl,v $
+# @(#) $Revision: 1.2 $
+# @(#) $Id: dbmdump,v 1.2 1999/09/27 05:36:31 chongo Exp chongo $
+# @(#) $Source: /usr/local/src/cmd/dbm/RCS/dbmdump,v $
 #
 # Copyright (c) 1999 by Landon Curt Noll.  All Rights Reserved.
 #
@@ -29,7 +29,7 @@
 # PERFORMANCE OF THIS SOFTWARE.
 #
 # usage:
-#	dbmdump [-d] [-k] [-s]
+#	dbmdump [-d] [-k] [-s] dbmfile
 #
 #	-d	print data as well as keys
 #	-k	do not print keys
@@ -47,7 +47,13 @@ require "getopts.pl";
 #
 &Getopts('kds');
 @ARGV == 1
-    or die "usage: $0 [-d] [-k] [-s] dbmname\n";
+    or die "usage: $0 [-d] [-k] [-s] dbfile\n" .
+	   "\n" .
+	   "\t-d	print data as well as keys\n" .
+	   "\t-k	do not print keys\n" .
+	   "\t-s	sort by keys\n" .
+	   "\n" .
+	   "\tdbmname	name of a Berkeley DBM or DB file\n";
 $dbmname = $ARGV[0];
 
 # open the dbm database

@@ -2,8 +2,8 @@
 #
 # dbmdump - dump the data from a dbm file
 #
-# @(#) $Revision: 1.2 $
-# @(#) $Id: Makefile,v 1.2 1999/09/25 23:53:22 chongo Exp chongo $
+# @(#) $Revision: 1.3 $
+# @(#) $Id: Makefile,v 1.3 1999/09/27 05:36:31 chongo Exp chongo $
 # @(#) $Source: /usr/local/src/cmd/dbm/RCS/Makefile,v $
 #
 # Copyright (c) 1998 by Landon Curt Noll.  All Rights Reserved.
@@ -37,12 +37,12 @@ RM = /bin/rm -f
 CP = /bin/cp
 CHMOD = /bin/chmod
 
-TARGETS = dbmdump
+TARGETS = dbmdump dbdump
 
-dbmdump: dbmdump.pl
-	rm -f $@
-	cp $? $@
-	chmod 0555 $@
+dbdump: dbmdump
+	${RM} $@
+	${CP} $? $@
+	${CHMOD} +x $@
 
 all: ${TARGETS}
 
@@ -59,3 +59,4 @@ install: all
 clean:
 
 clobber: clean
+	${RM} -f dbdump
