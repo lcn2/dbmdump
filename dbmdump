@@ -4,9 +4,9 @@
 #
 # title - one line synopsis
 #
-# @(#) $Revision$
-# @(#) $Id$
-# @(#) $Source$
+# @(#) $Revision: 1.1 $
+# @(#) $Id: dbmdump.pl,v 1.1 1999/09/22 01:51:19 chongo Exp chongo $
+# @(#) $Source: /usr/local/src/cmd/dbm/RCS/dbmdump.pl,v $
 #
 # Copyright (c) 1999 by Landon Curt Noll.  All Rights Reserved.
 #
@@ -34,6 +34,10 @@
 #	-d	print data as well as keys
 #	-k	do not print keys
 #	-s	sort by keys
+#
+# chongo <was here> /\oo/\
+#
+# Share and enjoy!
 
 # required modules
 #

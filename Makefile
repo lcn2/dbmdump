@@ -2,8 +2,8 @@
 #
 # dbmdump - dump the data from a dbm file
 #
-# @(#) $Revision: 1.1 $
-# @(#) $Id: Makefile,v 1.1 1999/09/22 01:51:30 chongo Exp $
+# @(#) $Revision: 1.2 $
+# @(#) $Id: Makefile,v 1.2 1999/09/25 23:53:22 chongo Exp chongo $
 # @(#) $Source: /usr/local/src/cmd/dbm/RCS/Makefile,v $
 #
 # Copyright (c) 1998 by Landon Curt Noll.  All Rights Reserved.
@@ -25,6 +25,10 @@
 # USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
+#
+# chongo <was here> /\oo/\
+#
+# Share and enjoy!
 
 SHELL = /bin/sh
 I = /usr/include
@@ -53,5 +57,5 @@ install: all
 	done
 
 clean:
-	
+
 clobber: clean
