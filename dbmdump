@@ -1,11 +1,11 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 #
-# dbmdump - dump the contents of a dbm file
+# dbmdump - dump the contents of a dbm file (also dbdump)
 #
 # title - one line synopsis
 #
-# @(#) $Revision: 1.2 $
-# @(#) $Id: dbmdump,v 1.2 1999/09/27 05:36:31 chongo Exp chongo $
+# @(#) $Revision: 1.3 $
+# @(#) $Id: dbmdump,v 1.3 2004/04/10 00:20:24 chongo Exp $
 # @(#) $Source: /usr/local/src/cmd/dbm/RCS/dbmdump,v $
 #
 # Copyright (c) 1999 by Landon Curt Noll.  All Rights Reserved.
@@ -30,6 +30,7 @@
 #
 # usage:
 #	dbmdump [-d] [-k] [-s] dbmfile
+#	dbdump [-d] [-k] [-s] dbfile
 #
 #	-d	print data as well as keys
 #	-k	do not print keys
@@ -39,9 +40,22 @@
 #
 # Share and enjoy!
 
+# use
+#
+use strict;
+use vars qw($opt_d $opt_s $opt_k);
+use bytes;
+
 # required modules
 #
 require "getopts.pl";
+
+# my variables
+#
+my $dbmname;	# name of dbm / db database to process
+my $key;	# a database key
+my $data;	# data associated with a database key
+my %DBM;	# hash tied to dbm / db database
 
 # parse args
 #
@@ -92,3 +106,4 @@ if ($opt_s) {
 # close up shop
 #
 dbmclose %DBM;
+exit(0);
