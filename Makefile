@@ -1,11 +1,10 @@
 #!/bin/make
-# %W% %G% %U%
 #
 # dbmdump - dump the data from a dbm file
 #
-# @(#) $Revision$
-# @(#) $Id$
-# @(#) $Source$
+# @(#) $Revision: 1.1 $
+# @(#) $Id: Makefile,v 1.1 1999/09/22 01:51:30 chongo Exp $
+# @(#) $Source: /usr/local/src/cmd/dbm/RCS/Makefile,v $
 #
 # Copyright (c) 1998 by Landon Curt Noll.  All Rights Reserved.
 #
