@@ -1,0 +1,84 @@
+#!/usr/bin/perl
+#
+# dbmdump - dump the contents of a dbm file
+#
+# title - one line synopsis
+#
+# @(#) $Revision$
+# @(#) $Id$
+# @(#) $Source$
+#
+# Copyright (c) 1999 by Landon Curt Noll.  All Rights Reserved.
+#
+# Permission to use, copy, modify, and distribute this software and
+# its documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright, this permission notice and text
+# this comment, and the disclaimer below appear in all of the following:
+#
+#       supporting documentation
+#       source copies
+#       source works derived from this source
+#       binaries derived from this source or from derived source
+#
+# LANDON CURT NOLL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+# INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+# EVENT SHALL LANDON CURT NOLL BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+# CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+# USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+# OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+# PERFORMANCE OF THIS SOFTWARE.
+#
+# usage:
+#	dbmdump [-d] [-k] [-s]
+#
+#	-d	print data as well as keys
+#	-k	do not print keys
+#	-s	sort by keys
+
+# required modules
+#
+require "getopts.pl";
+
+# parse args
+#
+&Getopts('kds');
+@ARGV == 1
+    or die "usage: $0 [-d] [-k] [-s] dbmname\n";
+$dbmname = $ARGV[0];
+
+# open the dbm database
+#
+dbmopen %DBM, $dbmname, undef
+    or die "cannot open DBM file $dbmname: $!\n";
+
+# dump the data
+#
+if ($opt_s) {
+    foreach $key (sort keys %DBM) {
+	if ($opt_d) {
+	    if ($opt_k) {
+		print $DBM{$key}, "\n";
+	    } else {
+		print $key, " = ", $DBM{$key}, "\n";
+	    }
+	} elsif (!$opt_k) {
+	    print $key, "\n";
+	}
+    }
+} else {
+    while (($key,$data) = each %DBM) {
+	if ($opt_d) {
+	    if ($opt_k) {
+		print $data, "\n";
+	    } else {
+		print $key, " = ", $data, "\n";
+	    }
+	} elsif (!$opt_k) {
+	    print $key, "\n";
+	}
+    }
+}
+
+# close up shop
+#
+dbmclose %DBM;
