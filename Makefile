@@ -2,9 +2,9 @@
 #
 # dbmdump - dump the data from a dbm file
 #
-# @(#) $Revision: 1.3 $
-# @(#) $Id: Makefile,v 1.3 1999/09/27 05:36:31 chongo Exp chongo $
-# @(#) $Source: /usr/local/src/cmd/dbm/RCS/Makefile,v $
+# @(#) $Revision: 1.4 $
+# @(#) $Id: Makefile,v 1.4 2004/04/10 00:20:24 chongo Exp $
+# @(#) $Source: /usr/local/src/bin/dbmdump/RCS/Makefile,v $
 #
 # Copyright (c) 1998 by Landon Curt Noll.  All Rights Reserved.
 #

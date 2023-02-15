@@ -4,9 +4,9 @@
 #
 # title - one line synopsis
 #
-# @(#) $Revision: 1.3 $
-# @(#) $Id: dbmdump,v 1.3 2004/04/10 00:20:24 chongo Exp $
-# @(#) $Source: /usr/local/src/cmd/dbm/RCS/dbmdump,v $
+# @(#) $Revision: 1.4 $
+# @(#) $Id: dbmdump,v 1.4 2004/05/21 15:17:03 chongo Exp $
+# @(#) $Source: /usr/local/src/bin/dbmdump/RCS/dbmdump,v $
 #
 # Copyright (c) 1999 by Landon Curt Noll.  All Rights Reserved.
 #
