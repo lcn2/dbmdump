@@ -1,12 +1,8 @@
-#!/bin/make
+#!/usr/bin/env make
 #
 # dbmdump - dump the data from a dbm file
 #
-# @(#) $Revision: 1.4 $
-# @(#) $Id: Makefile,v 1.4 2004/04/10 00:20:24 chongo Exp $
-# @(#) $Source: /usr/local/src/bin/dbmdump/RCS/Makefile,v $
-#
-# Copyright (c) 1998 by Landon Curt Noll.  All Rights Reserved.
+# Copyright (c) 1998,2023 by Landon Curt Noll.  All Rights Reserved.
 #
 # Permission to use, copy, modify, and distribute this software and
 # its documentation for any purpose and without fee is hereby granted,
@@ -30,7 +26,7 @@
 #
 # Share and enjoy!
 
-SHELL = /bin/sh
+SHELL = bash
 I = /usr/include
 DEST = /usr/local/bin
 RM = /bin/rm -f
