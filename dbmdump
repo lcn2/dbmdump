@@ -1,14 +1,10 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl -w
 #
 # dbmdump - dump the contents of a dbm file (also dbdump)
 #
 # title - one line synopsis
 #
-# @(#) $Revision: 1.4 $
-# @(#) $Id: dbmdump,v 1.4 2004/05/21 15:17:03 chongo Exp $
-# @(#) $Source: /usr/local/src/bin/dbmdump/RCS/dbmdump,v $
-#
-# Copyright (c) 1999 by Landon Curt Noll.  All Rights Reserved.
+# Copyright (c) 1999,2023 by Landon Curt Noll.  All Rights Reserved.
 #
 # Permission to use, copy, modify, and distribute this software and
 # its documentation for any purpose and without fee is hereby granted,
