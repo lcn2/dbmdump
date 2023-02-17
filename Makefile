@@ -26,31 +26,26 @@
 #
 # Share and enjoy!
 
-SHELL = bash
-I = /usr/include
-DEST = /usr/local/bin
-RM = /bin/rm -f
-CP = /bin/cp
-CHMOD = /bin/chmod
+SHELL= bash
+BINMODE= 0555
+DESTBIN= /usr/local/bin
+INSTALL= install
+DEST= /usr/local/bin
+RM= rm
+CP= cp
+CHMOD= chmod
 
 TARGETS = dbmdump dbdump
 
 dbdump: dbmdump
-	${RM} $@
+	${RM} -f $@
 	${CP} $? $@
 	${CHMOD} +x $@
 
 all: ${TARGETS}
 
 install: all
-	@for i in ${TARGETS}; do \
-	    echo "${RM} ${DEST}/$$i"; \
-	    ${RM} ${DEST}/$$i; \
-	    echo "${CP} $$i ${DEST}"; \
-	    ${CP} $$i ${DEST}; \
-	    echo "${CHMOD} 0555 ${DEST}/$$i"; \
-	    ${CHMOD} 0555 ${DEST}/$$i; \
-	done
+	${INSTALL} -c -m ${BINMODE} ${TARGETS} ${DESTBIN}
 
 clean:
 
