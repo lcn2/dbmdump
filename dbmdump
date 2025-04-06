@@ -1,10 +1,8 @@
-#!/usr/bin/env perl -w
+#!/usr/bin/env perl
 #
-# dbmdump - dump the contents of a dbm file (also dbdump)
+# dbmdump - dump the contents of a dbm file
 #
-# title - one line synopsis
-#
-# Copyright (c) 1999,2023 by Landon Curt Noll.  All Rights Reserved.
+# Copyright (c) 1998-1999,2004,2023,2025 by Landon Curt Noll.  All Rights Reserved.
 #
 # Permission to use, copy, modify, and distribute this software and
 # its documentation for any purpose and without fee is hereby granted,
@@ -24,82 +22,165 @@
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 #
-# usage:
-#	dbmdump [-d] [-k] [-s] dbmfile
-#	dbdump [-d] [-k] [-s] dbfile
+# chongo (Landon Curt Noll) /\oo/\
 #
-#	-d	print data as well as keys
-#	-k	do not print keys
-#	-s	sort by keys
+# http://www.isthe.com/chongo/index.html
+# https://github.com/lcn2
 #
-# chongo <was here> /\oo/\
-#
-# Share and enjoy!
+# Share and enjoy!  :-)
 
-# use
+
+# requirements
 #
 use strict;
-use vars qw($opt_d $opt_s $opt_k);
+use vars qw($opt_h $opt_V $opt_d $opt_s $opt_k);
 use bytes;
+use Getopt::Long qw(:config no_ignore_case);
+use File::Basename;
 
-# required modules
+# version
 #
-require "getopts.pl";
+my $VERSION = "1.2.1 2025-04-05";
 
 # my variables
 #
+my $NAME = basename($0);
 my $dbmname;	# name of dbm / db database to process
 my $key;	# a database key
 my $data;	# data associated with a database key
 my %DBM;	# hash tied to dbm / db database
 
-# parse args
+# usage and help
 #
-&Getopts('kds');
-@ARGV == 1
-    or die "usage: $0 [-d] [-k] [-s] dbfile\n" .
-	   "\n" .
-	   "\t-d	print data as well as keys\n" .
-	   "\t-k	do not print keys\n" .
-	   "\t-s	sort by keys\n" .
-	   "\n" .
-	   "\tdbmname	name of a Berkeley DBM or DB file\n";
-$dbmname = $ARGV[0];
+my $usage = "$NAME [-h] [-V] [-d] [-k] [-s] dbmfile";
+my $help = qq{$usage
 
-# open the dbm database
-#
-dbmopen %DBM, $dbmname, undef
-    or die "cannot open DBM file $dbmname: $!\n";
+    -h              print help and exit
+    -V              print version and exit
 
-# dump the data
+    -d              print data as well as keys
+    -k              do not print keys
+    -s              sort by keys
+
+    dbmfile         name of a Berkeley DBM or DB file
+
+$NAME version: $VERSION};
+my %optctl = (
+    "h" => \$opt_h,
+    "V" => \$opt_V,
+    "d" => \$opt_d,
+    "k" => \$opt_k,
+    "s" => \$opt_s,
+);
+
+
+# function prototypes
 #
-if ($opt_s) {
-    foreach $key (sort keys %DBM) {
-	if ($opt_d) {
-	    if ($opt_k) {
-		print $DBM{$key}, "\n";
-	    } else {
-		print $key, " = ", $DBM{$key}, "\n";
+sub error($@);
+
+
+# MAIN
+#
+MAIN: {
+
+    # setup
+    #
+    select(STDOUT);
+    $| = 1;
+
+    # set the defaults
+    #
+    $opt_h = 0;
+    $opt_V = 0;
+
+    # parse args
+    #
+    if (!GetOptions(%optctl)) {
+        error(1, "invalid command line\nusage: $help");
+    }
+    if ($opt_h) {
+        print "$help\n";
+        exit(0);
+    }
+    if ($opt_V) {
+        print "$VERSION\n";
+        exit(0);
+    }
+    if ($#ARGV < 0) {
+        error(2, "missing required argument\nusage: $help");
+    }
+
+    # open the dbm database
+    #
+    dbmopen %DBM, $dbmname, undef
+	or die "cannot open DBM file $dbmname: $!\n";
+
+    # dump the data
+    #
+    if ($opt_s) {
+	foreach $key (sort keys %DBM) {
+	    if ($opt_d) {
+		if ($opt_k) {
+		    print $DBM{$key}, "\n";
+		} else {
+		    print $key, " = ", $DBM{$key}, "\n";
+		}
+	    } elsif (!$opt_k) {
+		print $key, "\n";
 	    }
-	} elsif (!$opt_k) {
-	    print $key, "\n";
+	}
+    } else {
+	while (($key,$data) = each %DBM) {
+	    if ($opt_d) {
+		if ($opt_k) {
+		    print $data, "\n";
+		} else {
+		    print $key, " = ", $data, "\n";
+		}
+	    } elsif (!$opt_k) {
+		print $key, "\n";
+	    }
 	}
     }
-} else {
-    while (($key,$data) = each %DBM) {
-	if ($opt_d) {
-	    if ($opt_k) {
-		print $data, "\n";
-	    } else {
-		print $key, " = ", $data, "\n";
-	    }
-	} elsif (!$opt_k) {
-	    print $key, "\n";
-	}
-    }
+
+    # close up shop
+    #
+    dbmclose %DBM;
+    exit(0);
 }
 
-# close up shop
+
+# error - report an error and exit
 #
-dbmclose %DBM;
-exit(0);
+# given:
+#       $exitval        exit code value
+#       $msg ...        error debug message to print
+#
+sub error($@)
+{
+    my ($exitval) = shift @_;   # get args
+    my $msg;                    # error message to print
+
+    # parse args
+    #
+    if (!defined $exitval) {
+        $exitval = 254;
+    }
+    if ($#_ < 0) {
+        $msg = "<<< no message supplied >>>";
+    } else {
+        $msg = join(' ', @_);
+    }
+    if ($exitval =~ /\D/) {
+        $msg .= "<<< non-numeric exit code: $exitval >>>";
+        $exitval = 253;
+    }
+
+    # issue the error message
+    #
+    print STDERR "$0: $msg\n";
+
+    # issue an error message
+    #
+    exit($exitval);
+}
