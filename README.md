@@ -12,7 +12,7 @@ sudo make install
 
 # To use
 
-```sh
+```
 /usr/local/bin/dbmdump [-h] [-V] [-d] [-k] [-s] dbmfile
 
     -h              print help and exit
